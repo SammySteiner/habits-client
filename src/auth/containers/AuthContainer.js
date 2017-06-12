@@ -14,7 +14,7 @@ export default class AuthContainer extends Component {
         <h3>Login Form</h3>
         <LoginForm handleLogin={this.props.handleLogin}/>
         <h3>Signup Form</h3>
-        <SignupForm />
+        <SignupForm handleSignup={this.props.handleSignup}/>
       </div>
     )
   }

@@ -12,6 +12,8 @@ export default (props) => {
           <Goal goals={plan.goals} />
         </div>
       )
+    } else {
+      return null
     }
   })
   return (

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { createUser } from '../../api'
 
 export default class SignupForm extends Component {
   constructor(){
@@ -14,14 +13,13 @@ export default class SignupForm extends Component {
 
   handleSubmit(e){
     e.preventDefault()
-    createUser(this.state.username, this.state.email, this.state.password, this.state.password_confirmation)
-    .then(() => this.setState({
+    this.props.handleSignup(this.state)
+    this.setState({
       username: '',
       email: '',
       password: '',
       password_confirmation: ''
     })
-  )
   }
 
   handleChange( prop, e){

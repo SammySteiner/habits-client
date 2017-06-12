@@ -23,14 +23,14 @@ export function fetchUser(){
     .then( res => res.json() )
 }
 
-export function createUser(username, email, password, password_confirmation){
+export function createUser(params){
   return fetch(DB_URL + 'users', {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify( {user: {username: username, email: email, password: password}, password_confirmation: password_confirmation} )
+    body: JSON.stringify( {user: params} )
   })
   .then( res => res.json() )
 }
