@@ -1,12 +1,13 @@
 import React from 'react'
+import { Form } from 'semantic-ui-react'
 
 export default (props) => {
-  const actionsInputs = props.actions.map((action) => {
-    return(
-      <div>
-        <label>{`How will you make progress toward this goal:`}</label>
-        <input type='text' value={props.state[action]} onChange={e => props.handleChange( action, e )}/>
-      </div>
+  const actionsInputs = props.actions.map( (action, i) => {
+    return (
+      <Form.Field key={i}>
+        <label>How will action {i + 1} contribute to this goal:</label>
+        <input type='text' value={props.goals[props.goalIndex].actions[i].description} onChange={e => props.handleChange( ['actDesc', props.goalIndex, i], e )}/>
+      </Form.Field>
     )
   })
   return (

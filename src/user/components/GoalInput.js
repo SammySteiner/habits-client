@@ -1,18 +1,20 @@
 import React from 'react'
 import ActionInput from './ActionInput'
+import { Button, Form } from 'semantic-ui-react'
 
 export default (props) => {
-  const goalsInputs = props.goals.map((goal) => {
-    return(
-      <div>
-        <label>{`How many days do you have to accomplish ${goal}:`}</label>
-        <input type='number' value={props.state['goal' + goal]} onChange={e => props.handleChange( 'goal' + goal, e )}/>
-        <button type='button' onClick={props.handleAddAction}>Add a new Action</button>
+  const goalsInputs = props.goals.map( (goalObj, i) => {
+    return (
+      <Form.Field key={i}>
+        <label>{`How many days do you have to accomplish goal ${i + 1}:`}</label>
+        <input type='number' value={props.goals[i]['interval']} onChange={e => props.handleChange( ['goalInt', i], e )}/>
+        <Button type='button' onClick={(e) => props.handleAddAction(e, i)}>Add a new Action</Button>
         <ActionInput
-          state={props.state}
-          actions={props.state['actions' + goal]}
+          goals={props.state.goals}
+          actions={goalObj.actions}
+          goalIndex={i}
           handleChange={props.handleChange}/>
-      </div>
+      </Form.Field>
     )
   })
   return(

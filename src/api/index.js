@@ -13,7 +13,6 @@ export function fetchUsers(username, password){
     .then( res => res.json() )
 }
 
-
 export function fetchUser(){
   return fetch(DB_URL + 'users/dashboard' , {
     headers: {
@@ -44,6 +43,18 @@ export function createPlan(title, description, repeat, goals){
     },
     method: 'POST',
     body: JSON.stringify( {plan: {title: title, description: description, repeat: repeat, goals: goals}} )
+  })
+  .then( res => res.json() )
+}
+
+export function completeAction(action_id){
+  return fetch(DB_URL + 'users/complete-action/' + action_id, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': sessionStorage.jwt
+    },
+    method: 'PATCH',
   })
   .then( res => res.json() )
 }

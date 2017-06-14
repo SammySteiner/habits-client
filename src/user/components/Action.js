@@ -1,11 +1,20 @@
 import React from 'react'
+import { List, Icon } from 'semantic-ui-react'
 
 export default (props) => {
-  const actions = props.actions.map(action => {
+  const actions = props.actions.map((action, i) => {
     return (
-      <ul key={action.id}>
-        {action.complete !== true ? <li>{action.description}</li> : ''}
-      </ul>
+      <List key={action.id} >
+        <List.Item as='a' onClick={() => props.onCompleteAction(action)} >
+            <Icon name={action.complete === true ? 'remove circle outline' : 'check circle outline'} />
+          <List.Content >
+            <List.Header>Action {i + 1}</List.Header>
+            <List.Description >
+              {action.description}
+            </List.Description>
+          </List.Content>
+        </List.Item>
+      </List>
     )
   })
   return (

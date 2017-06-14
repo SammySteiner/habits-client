@@ -1,5 +1,6 @@
 import React from 'react'
 import Action from './Action'
+import { Card, Progress } from 'semantic-ui-react'
 
 export default (props) => {
   let completed = 0
@@ -8,16 +9,34 @@ export default (props) => {
     if (currentGoal === null && goal.complete === false) {
       currentGoal = goal
     }
-    if (goal.completed === true) {
+    if (goal.complete === true) {
       completed += 1
     }
   })
+  let cardContent
+  let today = new Date()
+  let start = new Date(currentGoal.start_date)
+  if ( start > today ) {
+     cardContent =
+     <Card.Content>
+       Congratulations, you're up to date with this goal! You're goal will resume on {currentGoal.start_date}
+       <Progress percent={100}/>
+     </Card.Content>
+  } else {
+     cardContent =
+     <Card.Content>
+       Tasks:
+       <Action actions={currentGoal.actions} onCompleteAction={props.onCompleteAction}/>
+       Goal Progress: {parseInt(completed/props.goals.length * 100, 10)}%
+       <Progress percent={completed/props.goals.length * 100} />
+     </Card.Content>
+  }
   return(
     <div>
-      <h5>You have completed {completed/100}% of this plan</h5>
-      <h5>Your current Goal expires at {currentGoal.expiration}</h5>
-      <h5>To complete your goal, you must: </h5>
-      <Action actions={currentGoal.actions} />
+        {cardContent}
+      <Card.Content extra>
+        Expires at {currentGoal.expiration}
+      </Card.Content>
     </div>
   )
 }
