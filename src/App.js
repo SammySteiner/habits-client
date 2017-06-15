@@ -14,6 +14,10 @@ const AuthenticatedUserContainer = isAuthenticated(UserContainer)
 class App extends Component {
   constructor(){
     super()
+    this.state = {
+      modalOpen: false
+    }
+
     this.handleLogin = this.handleLogin.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     this.handleSignup = this.handleSignup.bind(this)
@@ -40,13 +44,25 @@ class App extends Component {
     this.props.history.push('/')
   }
 
+  handleCloseModal(){
+    this.setState({modalOpen: false})
+  }
+
+  handleOpenPlanForm(){
+    if (sessionStorage.jwt === undefined ) {
+      alert('You must be logged in to create a plan.')
+    } else {
+      this.setState({modalOpen: true})  
+    }
+  }
+
   render() {
     return (
       <Container>
-        <NavBar handleLogout={this.handleLogout}/>
+        <NavBar handleLogout={this.handleLogout} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/>
         <h1>Welcome to Habits</h1>
           <Switch>
-            <Route exact path='/' component={AuthenticatedUserContainer}/>
+            <Route exact path='/' render={ () => <AuthenticatedUserContainer modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)}/> }/>
             <Route exact path='/login' render={ () => <AuthContainer handleSignup={this.handleSignup} handleLogin={this.handleLogin}/>}/>
           </Switch>
       </Container>

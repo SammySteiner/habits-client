@@ -44,8 +44,7 @@ export default class UserContainer extends Component{
           <Plan user={this.state.user}
             onCompleteAction={this.handleCompleteAction.bind(this)}
             handleDelete={this.handleDelete.bind(this)}/>
-          <h2>Create a new Plan:</h2>
-          <PlanForm createUserPlan={this.createUserPlan.bind(this)}/>
+          <PlanForm createUserPlan={this.createUserPlan.bind(this)} modalOpen={this.props.modalOpen} closeModal={this.props.closeModal}/>
         </div>
       )
     }

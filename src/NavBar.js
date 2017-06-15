@@ -7,6 +7,9 @@ export default ( props ) => {
       <Menu.Item>
         Habits
       </Menu.Item>
+      <Menu.Item onClick={props.handleOpenPlanForm}>
+        Create Plan
+      </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item onClick={props.handleLogout}>
           Log Out

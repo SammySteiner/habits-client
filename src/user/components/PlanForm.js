@@ -9,8 +9,7 @@ export default class PlanForm extends Component {
       title: '',
       description: '',
       repeat: false,
-      goals: [],
-      modalOpen: false
+      goals: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -49,14 +48,15 @@ export default class PlanForm extends Component {
       title: '',
       description: '',
       repeat: false,
-      goals: [],
-      modalOpen: false
+      goals: []
     })
+    this.props.closeModal()
   }
 
   render(){
+    console.log(this.props)
     return(
-      <Modal trigger={<Button onClick={() => this.setState({modalOpen: true})}>Show Modal</Button>} open={this.state.modalOpen}>
+      <Modal open={this.props.modalOpen} onClose={this.props.closeModal}>
       <Modal.Header>Create a Plan</Modal.Header>
       <Modal.Content>
         <Form onSubmit={this.handleSubmit.bind(this)}>
