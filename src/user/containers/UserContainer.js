@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchUser, completeAction } from '../../api'
+import { fetchUser, completeAction, deleteItem, createPlan } from '../../api'
 import { Icon } from 'semantic-ui-react'
 
 import Plan from '../components/Plan'
@@ -14,6 +14,10 @@ export default class UserContainer extends Component{
     }
   }
 
+  createUserPlan(title, description, repeat, goals){
+    createPlan(title, description, repeat, goals)
+    .then( (data) => this.setState({ user: data }) )
+  }
 
   componentDidMount(){
     fetchUser()
@@ -25,6 +29,11 @@ export default class UserContainer extends Component{
     .then( data => this.setState({ user: data }))
   }
 
+  handleDelete( type, id ){
+    deleteItem(type, id)
+    .then( data => this.setState({ user: data }) )
+  }
+
   render(){
     if (this.state.user === null) {
       return <div><Icon loading name='spinner' size='massive'/></div>
@@ -32,9 +41,11 @@ export default class UserContainer extends Component{
       return (
         <div>
           <UserHeader username={this.state.user.username} plans={this.state.user.plans.filter(plan => plan.goals.length > 0)}/>
-          <Plan user={this.state.user} onCompleteAction={this.handleCompleteAction.bind(this)}/>
+          <Plan user={this.state.user}
+            onCompleteAction={this.handleCompleteAction.bind(this)}
+            handleDelete={this.handleDelete.bind(this)}/>
           <h2>Create a new Plan:</h2>
-          <PlanForm />
+          <PlanForm createUserPlan={this.createUserPlan.bind(this)}/>
         </div>
       )
     }

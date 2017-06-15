@@ -59,6 +59,18 @@ export function completeAction(action_id){
   .then( res => res.json() )
 }
 
+export function deleteItem( type, id ){
+  return fetch(DB_URL + 'users/' + type + '/' + id, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': sessionStorage.jwt
+    },
+    method: 'DELETE',
+  })
+  .then( res => res.json() )
+}
+
 export function login(params){
   return fetch(DB_URL + 'auth', {
     headers: {

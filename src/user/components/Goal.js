@@ -1,6 +1,6 @@
 import React from 'react'
 import Action from './Action'
-import { Card, Progress } from 'semantic-ui-react'
+import { Card, Progress, Icon, Header, Popup } from 'semantic-ui-react'
 
 export default (props) => {
   let completed = 0
@@ -36,7 +36,11 @@ export default (props) => {
         {cardContent}
       <Card.Content extra>
         Expires at {currentGoal.expiration}
-      </Card.Content>
+      <Header as='h5' floated='right'>
+        <Popup trigger={<Icon name='trash' onClick={() => props.handleDelete( 'goals', currentGoal.id)}/>} content='delete current goal'/>
+      </Header>
+    </Card.Content>
+
     </div>
   )
 }

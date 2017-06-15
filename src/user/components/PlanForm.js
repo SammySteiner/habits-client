@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import GoalInput from './GoalInput'
-import { Form, Button } from 'semantic-ui-react'
-
-import { createPlan } from '../../api'
+import { Form, Button, Modal } from 'semantic-ui-react'
 
 export default class PlanForm extends Component {
   constructor(){
@@ -11,8 +9,10 @@ export default class PlanForm extends Component {
       title: '',
       description: '',
       repeat: false,
-      goals: []
+      goals: [],
+      modalOpen: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange( prop, event){
@@ -43,36 +43,43 @@ export default class PlanForm extends Component {
     this.setState(newState)
   }
 
-  handleSubmit(e){
-    e.preventDefault()
-    createPlan(this.state.title, this.state.description, this.state.repeat, this.state.goals)
-    .then(() => this.setState({
+  handleSubmit(){
+    this.props.createUserPlan(this.state.title, this.state.description, this.state.repeat, this.state.goals)
+    this.setState({
       title: '',
       description: '',
       repeat: false,
-      goals: []
-    }))
+      goals: [],
+      modalOpen: false
+    })
   }
 
   render(){
     return(
-      <Form onSubmit={this.handleSubmit.bind(this)}>
-        <Form.Field>
-          <label>Plan Title:</label>
-          <input type='text' value={this.state.title} onChange={e => this.handleChange( 'title', e )}/>
-        </Form.Field>
-        <Form.Field>
-          <label>Plan Description:</label>
-          <input type='textarea' value={this.state.description} onChange={e => this.handleChange( 'description', e )}/>
-        </Form.Field>
-        <Form.Field>
-          <label>Auto Repeat:</label>
-          <input name='repeat' type='checkbox' checked={this.state.repeat} onChange={e => this.handleChange( 'repeat', e )}/>
-        </Form.Field>
-        <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a new Goal</Button>
-        <GoalInput state={this.state} goals={this.state.goals} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
-        <Button type='submit'>Create Plan</Button>
-      </Form>
+      <Modal trigger={<Button onClick={() => this.setState({modalOpen: true})}>Show Modal</Button>} open={this.state.modalOpen}>
+      <Modal.Header>Create a Plan</Modal.Header>
+      <Modal.Content>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
+            <Form.Field>
+            <label>Plan Title:</label>
+            <input type='text' value={this.state.title} onChange={e => this.handleChange( 'title', e )}/>
+          </Form.Field>
+          <Form.Field>
+            <label>Plan Description:</label>
+            <input type='textarea' value={this.state.description} onChange={e => this.handleChange( 'description', e )}/>
+          </Form.Field>
+          <Form.Field>
+            <label>Auto Repeat:</label>
+            <input name='repeat' type='checkbox' checked={this.state.repeat} onChange={e => this.handleChange( 'repeat', e )}/>
+          </Form.Field>
+          <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a new Goal</Button>
+          <GoalInput state={this.state} goals={this.state.goals} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
+        </Form>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button onClick={this.handleSubmit} color='blue' type='submit'>Create Plan</Button>
+      </Modal.Actions>
+      </Modal>
     )
   }
 }

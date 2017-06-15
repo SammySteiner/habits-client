@@ -11,7 +11,7 @@ export default (props) => {
             <Card.Header>{plan.title}</Card.Header>
             <Card.Meta>{plan.description}</Card.Meta>
           </Card.Content>
-            <Goal goals={plan.goals} onCompleteAction={props.onCompleteAction}/>
+            <Goal goals={plan.goals} onCompleteAction={props.onCompleteAction} handleDelete={props.handleDelete}/>
         </Card>
       )
     } else {

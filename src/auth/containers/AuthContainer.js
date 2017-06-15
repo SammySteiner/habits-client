@@ -13,11 +13,11 @@ export default class AuthContainer extends Component {
     return (
       <Grid columns={2} divided>
         <Grid.Column>
-          <h3>Login Form</h3>
+          <h3>Log In</h3>
           <LoginForm handleLogin={this.props.handleLogin}/>
         </Grid.Column>
         <Grid.Column>
-          <h3>Signup Form</h3>
+          <h3>Sign Up</h3>
           <SignupForm handleSignup={this.props.handleSignup}/>
         </Grid.Column>
       </Grid>

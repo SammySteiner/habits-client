@@ -6,12 +6,9 @@ export default (props) => {
     return (
       <List key={action.id} >
         <List.Item as='a' onClick={() => props.onCompleteAction(action)} >
-            <Icon name={action.complete === true ? 'remove circle outline' : 'check circle outline'} />
+            <Icon size='large' name={action.complete === true ? 'check circle' : 'circle thin'} color={action.complete === true ? 'green' : 'grey'} />
           <List.Content >
-            <List.Header>Action {i + 1}</List.Header>
-            <List.Description >
-              {action.description}
-            </List.Description>
+            <List.Header>{action.description}</List.Header>
           </List.Content>
         </List.Item>
       </List>
