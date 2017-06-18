@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchUser, completeAction, deleteItem, createPlan } from '../../api'
+import { fetchUser, completeAction, deleteItem, createPlan, editPlan } from '../../api'
 import { Icon } from 'semantic-ui-react'
 
 import Plan from '../components/Plan'
@@ -10,13 +10,26 @@ export default class UserContainer extends Component{
   constructor(){
     super()
     this.state = {
-      user: null
+      user: null,
+      formState: {
+        title: '',
+        description: '',
+        repeat: false,
+        goals: []
+      }
     }
   }
 
   createUserPlan(title, description, repeat, goals){
     createPlan(title, description, repeat, goals)
-    .then( (data) => this.setState({ user: data }) )
+      .then( data => this.setState({ user: data }))
+
+
+  }
+
+  editUserPlan(plan){
+    editPlan(plan)
+    .then( data => this.setState({ user: data }))
   }
 
   componentDidMount(){
@@ -30,8 +43,29 @@ export default class UserContainer extends Component{
   }
 
   handleDelete( type, id ){
-    deleteItem(type, id)
-    .then( data => this.setState({ user: data }) )
+    if (type === 'actions') {
+      deleteItem(type, id)
+      .then(console.log)
+        // .then( data => this.setState({formState: data.plan, user: data}))
+    } else {
+      deleteItem(type, id)
+      .then( data => this.setState({ user: data },
+      this.resetFormState) )
+
+    }
+  }
+
+  handleOpenEditForm( plan ){
+    this.setState({formState: plan})
+  }
+
+  resetFormState(){
+    this.setState({formState: {
+      title: '',
+      description: '',
+      repeat: false,
+      goals: []
+    }}, () => this.props.closeModal() )
   }
 
   render(){
@@ -40,11 +74,20 @@ export default class UserContainer extends Component{
     } else {
       return (
         <div>
-          <UserHeader username={this.state.user.username} plans={this.state.user.plans.filter(plan => plan.goals.length > 0)}/>
+          <UserHeader user={this.state.user} plans={this.state.user.plans.filter(plan => plan.goals.length > 0)}/>
           <Plan user={this.state.user}
             onCompleteAction={this.handleCompleteAction.bind(this)}
+            handleDelete={this.handleDelete.bind(this)}
+            handleOpenEditForm={this.handleOpenEditForm.bind(this)}/>
+          <PlanForm
+            resetFormState={this.resetFormState.bind(this)}
+            formState={this.state.formState}
+            createUserPlan={this.createUserPlan.bind(this)}
+            modalOpen={this.props.modalOpen}
+            closeModal={this.props.closeModal}
+            handleOpenPlanForm={this.props.handleOpenPlanForm}
+            editUserPlan={this.editUserPlan.bind(this)}
             handleDelete={this.handleDelete.bind(this)}/>
-          <PlanForm createUserPlan={this.createUserPlan.bind(this)} modalOpen={this.props.modalOpen} closeModal={this.props.closeModal}/>
         </div>
       )
     }

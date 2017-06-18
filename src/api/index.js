@@ -42,7 +42,20 @@ export function createPlan(title, description, repeat, goals){
       'Authorization': sessionStorage.jwt
     },
     method: 'POST',
-    body: JSON.stringify( {plan: {title: title, description: description, repeat: repeat, goals: goals}} )
+    body: JSON.stringify( {plan: {title: title, description: description, repeat: repeat, goals_attributes: formatGoals(goals)}} )
+  })
+  .then( res => res.json() )
+}
+
+export function editPlan(plan){
+  return fetch(DB_URL + 'plan/' + plan.id + '/edit', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': sessionStorage.jwt
+    },
+    method: 'PATCH',
+    body: JSON.stringify( {plan: formatPlan(plan) } )
   })
   .then( res => res.json() )
 }
@@ -81,4 +94,16 @@ export function login(params){
     body: JSON.stringify( params )
   })
   .then( res => res.json() )
+}
+
+function formatGoals(goals) {
+  return goals.map( (goal) => {
+    return Object.assign(goal, {actions_attributes: goal.actions})
+  })
+}
+
+function formatPlan(plan) {
+  var newPlan = Object.assign({}, plan, {goals_attributes: plan.goals})
+  newPlan.goals_attributes = formatGoals(newPlan.goals_attributes)
+  return newPlan
 }

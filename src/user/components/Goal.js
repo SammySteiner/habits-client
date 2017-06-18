@@ -13,6 +13,7 @@ export default (props) => {
       completed += 1
     }
   })
+  
   let cardContent
   let today = new Date()
   let start = new Date(currentGoal.start_date)
@@ -37,7 +38,7 @@ export default (props) => {
       <Card.Content extra>
         Expires at {currentGoal.expiration}
       <Header as='h5' floated='right'>
-        <Popup trigger={<Icon name='trash' onClick={() => props.handleDelete( 'goals', currentGoal.id)}/>} content='delete current goal'/>
+        <Popup trigger={<Icon name='edit' onClick={() => props.handleOpenEditForm(props.plan)}/>} content='edit this goal'/>
       </Header>
     </Card.Content>
 

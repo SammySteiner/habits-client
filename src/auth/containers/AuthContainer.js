@@ -4,10 +4,7 @@ import { Grid } from 'semantic-ui-react'
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
 
-
 export default class AuthContainer extends Component {
-
-
 
   render(){
     return (

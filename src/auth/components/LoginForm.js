@@ -40,7 +40,6 @@ export default class LoginForm extends Component {
           <Button type='submit'>Log In</Button>
         </Form>
       </Container>
-
     )
   }
 }

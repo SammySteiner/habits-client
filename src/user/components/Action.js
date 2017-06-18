@@ -1,8 +1,21 @@
 import React from 'react'
 import { List, Icon } from 'semantic-ui-react'
 
-export default (props) => {
-  const actions = props.actions.map((action, i) => {
+  export default (props) => {
+    function compare(a, b) {
+      const idA = a.id
+      const idB = b.id
+
+      let comparison = 0;
+      if (idA > idB) {
+        comparison = 1
+      } else if (idA < idB) {
+        comparison = -1
+      }
+      return comparison
+  }
+  const actionsSort = props.actions.sort(compare)
+  const actions = actionsSort.map((action, i) => {
     return (
       <List key={action.id} >
         <List.Item as='a' onClick={() => props.onCompleteAction(action)} >

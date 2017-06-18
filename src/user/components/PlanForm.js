@@ -12,6 +12,22 @@ export default class PlanForm extends Component {
       goals: []
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this.state.title !== nextProps.formState.title) {
+      this.setState({
+        title: nextProps.formState.title,
+        description: nextProps.formState.description,
+        repeat: nextProps.formState.repeat,
+        goals: nextProps.formState.goals,
+        id: nextProps.formState.id,
+        complete: nextProps.formState.complete,
+        completed_at: nextProps.formState.completed_at
+      })
+      this.props.handleOpenPlanForm()
+    }
   }
 
   handleChange( prop, event){
@@ -42,6 +58,11 @@ export default class PlanForm extends Component {
     this.setState(newState)
   }
 
+  handleEdit(){
+    this.props.editUserPlan(this.state)
+    this.props.resetFormState()
+  }
+
   handleSubmit(){
     this.props.createUserPlan(this.state.title, this.state.description, this.state.repeat, this.state.goals)
     this.setState({
@@ -49,15 +70,13 @@ export default class PlanForm extends Component {
       description: '',
       repeat: false,
       goals: []
-    })
-    this.props.closeModal()
+    }, this.props.closeModal )
   }
 
   render(){
-    console.log(this.props)
     return(
-      <Modal open={this.props.modalOpen} onClose={this.props.closeModal}>
-      <Modal.Header>Create a Plan</Modal.Header>
+      <Modal open={this.props.modalOpen} onClose={this.props.resetFormState}>
+      <Modal.Header>{ this.state.id !== undefined ? 'Edit Your Plan' : 'Create a Plan' }</Modal.Header>
       <Modal.Content>
         <Form onSubmit={this.handleSubmit.bind(this)}>
             <Form.Field>
@@ -73,12 +92,20 @@ export default class PlanForm extends Component {
             <input name='repeat' type='checkbox' checked={this.state.repeat} onChange={e => this.handleChange( 'repeat', e )}/>
           </Form.Field>
           <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a new Goal</Button>
-          <GoalInput state={this.state} goals={this.state.goals} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
+          <GoalInput state={this.state} goals={this.state.goals} handleDelete={this.props.handleDelete} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
         </Form>
       </Modal.Content>
-      <Modal.Actions>
-        <Button onClick={this.handleSubmit} color='blue' type='submit'>Create Plan</Button>
-      </Modal.Actions>
+
+        {this.state.id !== undefined ?
+          <Modal.Actions>
+          <Button onClick={this.handleEdit} color='blue' type='button'>Edit Plan</Button>
+          <Button onClick={() => this.props.handleDelete('plans', this.state.id)} color='red' type='button'>Delete Plan</Button>
+          </Modal.Actions>
+          :
+          <Modal.Actions>
+            <Button onClick={this.handleSubmit} color='blue' type='button'>Create Plan</Button>
+          </Modal.Actions>
+        }
       </Modal>
     )
   }

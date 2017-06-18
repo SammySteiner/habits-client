@@ -52,7 +52,7 @@ class App extends Component {
     if (sessionStorage.jwt === undefined ) {
       alert('You must be logged in to create a plan.')
     } else {
-      this.setState({modalOpen: true})  
+      this.setState({modalOpen: true})
     }
   }
 
@@ -62,7 +62,7 @@ class App extends Component {
         <NavBar handleLogout={this.handleLogout} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/>
         <h1>Welcome to Habits</h1>
           <Switch>
-            <Route exact path='/' render={ () => <AuthenticatedUserContainer modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)}/> }/>
+            <Route exact path='/' render={ () => <AuthenticatedUserContainer modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/> }/>
             <Route exact path='/login' render={ () => <AuthContainer handleSignup={this.handleSignup} handleLogin={this.handleLogin}/>}/>
           </Switch>
       </Container>
