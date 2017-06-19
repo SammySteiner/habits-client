@@ -1,4 +1,4 @@
-let DB_URL = 'https://fast-fjord-30160.herokuapp.com/'
+let DB_URL = 'https://fast-fjord-30160.herokuapp.com/api/v1'
 // if (ENV['DB_URL']) {
 //   DB_URL = ENV['DB_URL']
 // }
