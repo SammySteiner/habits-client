@@ -1,4 +1,4 @@
-const DB_URL = 'http://localhost:3000/api/v1/'
+let DB_URL = 'http://localhost:3000/api/v1/'
 if (ENV['DB_URL']) {
   DB_URL = ENV['DB_URL']
 }
