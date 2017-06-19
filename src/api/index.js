@@ -1,7 +1,7 @@
-let DB_URL = 'http://localhost:3000/api/v1/'
-if (ENV['DB_URL']) {
-  DB_URL = ENV['DB_URL']
-}
+let DB_URL = 'https://fast-fjord-30160.herokuapp.com/'
+// if (ENV['DB_URL']) {
+//   DB_URL = ENV['DB_URL']
+// }
 
 export function fetchUsers(username, password){
   return fetch(DB_URL + 'users/', {
