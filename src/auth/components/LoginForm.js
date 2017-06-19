@@ -31,11 +31,11 @@ export default class LoginForm extends Component {
         <Form onSubmit={this.handleSubmit.bind(this)}>
           <Form.Field>
             <label>Username:</label>
-            <input type='text' value={this.state.username} onChange={e => this.handleChange( 'username', e )}/>
+            <input required={true} type='text' value={this.state.username} onChange={e => this.handleChange( 'username', e )}/>
           </Form.Field>
           <Form.Field>
             <label>Password:</label>
-            <input type='password' value={this.state.password} onChange={e => this.handleChange( 'password', e )}/>
+            <input required={true} type='password' value={this.state.password} onChange={e => this.handleChange( 'password', e )}/>
           </Form.Field>
           <Button type='submit'>Log In</Button>
         </Form>

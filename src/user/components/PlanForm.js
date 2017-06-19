@@ -9,7 +9,8 @@ export default class PlanForm extends Component {
       title: '',
       description: '',
       repeat: false,
-      goals: []
+      goals: [],
+      formValid: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
@@ -34,34 +35,73 @@ export default class PlanForm extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     if (prop === 'title' || prop === 'description' || prop === 'repeat') {
-      this.setState({ [prop]: value })
+      this.setState({ [prop]: value }, () => this.checkFormValid() )
     } else if (prop[0] === 'goalInt') {
       var newState = Object.assign({}, this.state)
       newState.goals[prop[1]].interval = value
       this.setState(newState)
+      this.checkFormValid()
     } else if (prop[0] === 'actDesc') {
         newState = Object.assign({}, this.state)
         newState.goals[prop[1]].actions[prop[2]].description = value
         this.setState(newState)
+        this.checkFormValid()
+    }
+  }
+
+  checkFormValid(){
+    if (this.state.title.length > 0) {
+      if (this.state.description.length > 0) {
+        let allGoals = this.state.goals.length
+        let allActions = 0
+        let validGoals = 0
+        let validActions = 0
+        this.state.goals.forEach( goal => {
+          if (goal.actions.length === 0) {
+            allActions += 1
+          } else {
+            allActions += goal.actions.length
+          }
+          if (goal.interval.length > 0 && typeof(parseInt(goal.interval, 10)) === 'number' && goal.interval > 0) {
+            validGoals += 1
+            goal.actions.forEach( action => {
+              if (action.description.length > 0) {
+                validActions += 1
+              }
+            })
+          }
+        })
+        if (validGoals > 0 && validActions > 0 && allGoals === validGoals && validActions === allActions){
+          return this.setState({ formValid: true })
+        } else {
+          return this.setState({ formValid: false })
+        }
+      } else {
+        this.setState({ formValid: false })
+      }
+    } else {
+      this.setState({ formValid: false })
     }
   }
 
   handleDeleteGoal(type, id) {
     let newGoals = this.state.goals
     newGoals.splice(id, 1)
-    this.setState({goals: newGoals})
+    this.setState({goals: newGoals}, () => this.checkFormValid() )
   }
 
   handleAddGoal(e){
     var newState = Object.assign({}, this.state)
     newState.goals.push({interval: '', actions: []})
     this.setState(newState)
+    this.checkFormValid()
   }
 
   handleAddAction(e, i){
     var newState = Object.assign({}, this.state)
     newState.goals[i].actions.push({description: ''})
     this.setState(newState)
+    this.checkFormValid()
   }
 
   handleEdit(){
@@ -75,7 +115,8 @@ export default class PlanForm extends Component {
       title: '',
       description: '',
       repeat: false,
-      goals: []
+      goals: [],
+      formValid: false
     }, this.props.closeModal )
   }
 
@@ -110,7 +151,7 @@ export default class PlanForm extends Component {
           </Modal.Actions>
           :
           <Modal.Actions>
-            <Button onClick={this.handleSubmit} color='blue' type='button'>Create Plan</Button>
+            <Button onClick={this.handleSubmit} disabled={!this.state.formValid} color='blue' type='button'>Create Plan</Button>
           </Modal.Actions>
         }
       </Modal>
