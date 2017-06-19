@@ -8,8 +8,8 @@ export default (props) => {
       <Form.Field key={i}>
         <Divider></Divider>
         <Segment>
-        <label>{`How many days do you have to accomplish goal ${i + 1}:`}</label>
-        <input type='number' value={props.goals[i]['interval']} onChange={e => props.handleChange( ['goalInt', i], e )}/>
+        <label>{`Phase ${i + 1} length:`}</label>
+        <input placeholder={`How many days would you like to set aside for is phase ${i + 1} your goal:`} type='number' value={props.goals[i]['interval']} onChange={e => props.handleChange( ['goalInt', i], e )}/>
         <Button type='button' onClick={(e) => props.handleAddAction(e, i)}>Add a new Action</Button>
         {/* if the goal is in the db and it has an id, use the db handledelete, otherwise, create a new function to just remove it from the planForm state */}
 

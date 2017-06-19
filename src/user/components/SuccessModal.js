@@ -14,7 +14,7 @@ export default (props) => {
           >
           <Modal.Header>Congratulations!</Modal.Header>
           <Modal.Content>
-            <h3>You've completed your plan to { props.plan ? props.plan.title : null } and have achieved your goals to { props.plan ? props.plan.description : null }. The steps you took to succeed were {actionDescriptions}.</h3>
+            <h3>You've completed your plan to { props.plan ? props.plan.title : null } and have achieved your goal to { props.plan ? props.plan.description : null }. The steps you took to succeed were {actionDescriptions}.</h3>
           </Modal.Content>
           <Modal.Content image>
             <Image wrapped size='medium' src={props.gif} />

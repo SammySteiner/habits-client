@@ -87,11 +87,12 @@ export default class PlanForm extends Component {
         <Form onSubmit={this.handleSubmit.bind(this)}>
             <Form.Field>
             <label>Plan Title:</label>
-            <input type='text' value={this.state.title} onChange={e => this.handleChange( 'title', e )}/>
+            <input placeholder='An easy to remember name for this goal' type='text' value={this.state.title} onChange={e => this.handleChange( 'title', e )}/>
           </Form.Field>
           <Form.Field>
-            <label>Plan Description:</label>
-            <input type='textarea' value={this.state.description} onChange={e => this.handleChange( 'description', e )}/>
+            <Form.TextArea label='Goal:' placeholder="Describe the long term accomplishments you'd like to create for yourself" value={this.state.description} onChange={e => this.handleChange( 'description', e )} />
+            {/* <label>Goal:</label>
+            <input placeholder="Describe the long term accomplishments you'd like to create for yourself" type='textarea' value={this.state.description} onChange={e => this.handleChange( 'description', e )}/> */}
           </Form.Field>
           <Form.Field>
             <label>Auto Repeat:</label>

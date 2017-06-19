@@ -55,7 +55,9 @@ export function chartData(user){
     labels: []
   }
 
-  user.plans.forEach(plan => {
+  let activePlans = user.plans.filter(plan => !plan.complete)
+
+  activePlans.forEach(plan => {
     let totalActiveActions = 0
     let completeActiveActions = 0
     plan.goals.forEach(goal => {
@@ -72,7 +74,7 @@ export function chartData(user){
     data.datasets[0].data.push(Math.round(completeActiveActions / totalActiveActions * 100))
   })
 
-  user.plans.forEach((plan, i) => {
+  activePlans.forEach((plan, i) => {
     data.labels.push(plan.title)
     data.datasets[0].backgroundColor.push(colors[i])
   })

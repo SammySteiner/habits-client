@@ -61,6 +61,7 @@ class App extends Component {
       <Container>
         <NavBar handleLogout={this.handleLogout} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/>
         <h1>Welcome to Habits</h1>
+        <p>Habits is a tool to help create accountability through data for your journey to a better you. Use the form to create new goals, break them up into phases, and describe each action you will take to turn this idea into reality. Good luck. I believe in you!</p>
           <Switch>
             <Route exact path='/' render={ () => <AuthenticatedUserContainer modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/> }/>
             <Route exact path='/login' render={ () => <AuthContainer handleSignup={this.handleSignup} handleLogin={this.handleLogin}/>}/>
