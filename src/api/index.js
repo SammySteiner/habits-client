@@ -1,4 +1,7 @@
 const DB_URL = 'http://localhost:3000/api/v1/'
+if (ENV['DB_URL']) {
+  DB_URL = ENV['DB_URL']
+}
 
 export function fetchUsers(username, password){
   return fetch(DB_URL + 'users/', {
