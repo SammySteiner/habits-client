@@ -96,6 +96,11 @@ export function login(params){
   .then( res => res.json() )
 }
 
+export function SuccessGif(){
+  return fetch('https://api.giphy.com/v1/gifs/search?q=success&api_key=dc6zaTOxFJmzC')
+  .then( res => res.json() )
+}
+
 function formatGoals(goals) {
   return goals.map( (goal) => {
     return Object.assign(goal, {actions_attributes: goal.actions})

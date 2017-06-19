@@ -1,12 +1,11 @@
 export function completedPlans(user){
-  let totalPlans = user.plans.length
   let completePlans = 0
   user.plans.forEach( plan => {
     if (plan.complete) {
       completePlans += 1
     }
   })
-  return Math.round(completePlans / totalPlans * 100)
+  return completePlans
 }
 
 export function completedActiveGoals(user){
@@ -52,7 +51,7 @@ export function chartData(user){
     datasets: [{
         data: [],
         backgroundColor: []
-    }],
+          }],
     labels: []
   }
 

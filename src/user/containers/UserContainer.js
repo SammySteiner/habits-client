@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { fetchUser, completeAction, deleteItem, createPlan, editPlan } from '../../api'
+import { fetchUser, completeAction, deleteItem, createPlan, editPlan, SuccessGif } from '../../api'
+import { completedPlans } from '../components/successCalc'
 import { Icon } from 'semantic-ui-react'
 
 import Plan from '../components/Plan'
 import PlanForm from '../components/PlanForm'
 import UserHeader from '../components/UserHeader'
+import SuccessModal from '../components/SuccessModal'
 
 export default class UserContainer extends Component{
   constructor(){
@@ -16,15 +18,28 @@ export default class UserContainer extends Component{
         description: '',
         repeat: false,
         goals: []
-      }
+      },
+      successModal: false,
+      successModalPlan: null,
+      successCheer: ''
     }
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    if (this.state.user !== null && completedPlans(this.state.user) !== completedPlans(nextState.user)) {
+      let plan = nextState.user.plans.find(newPlan => newPlan.complete !== this.state.user.plans.find(oldPlan => oldPlan.id === newPlan.id).complete)
+      SuccessGif().then(res => res.data[Math.floor(Math.random() * res.data.length)].images.fixed_height.url)
+      .then(img => this.setState({successModal: true, successModalPlan: plan, successCheer: img}))
+    }
+  }
+
+  handleCloseSuccessModal(){
+    this.setState({successModal: false, successModalPlan: null})
   }
 
   createUserPlan(title, description, repeat, goals){
     createPlan(title, description, repeat, goals)
       .then( data => this.setState({ user: data }))
-
-
   }
 
   editUserPlan(plan){
@@ -43,15 +58,10 @@ export default class UserContainer extends Component{
   }
 
   handleDelete( type, id ){
-    if (type === 'actions') {
-      deleteItem(type, id)
-      .then(console.log)
-        // .then( data => this.setState({formState: data.plan, user: data}))
-    } else {
+    if (type = 'plans') {
       deleteItem(type, id)
       .then( data => this.setState({ user: data },
       this.resetFormState) )
-
     }
   }
 
@@ -74,7 +84,8 @@ export default class UserContainer extends Component{
     } else {
       return (
         <div>
-          <UserHeader user={this.state.user} plans={this.state.user.plans.filter(plan => plan.goals.length > 0)}/>
+          <UserHeader user={this.state.user} plans={this.state.user.plans.filter(plan => plan.goals.length > 0)} />
+          <SuccessModal plan={this.state.successModalPlan} successModal={this.state.successModal} closeSuccessModal={this.handleCloseSuccessModal.bind(this)} gif={this.state.successCheer}/>
           <Plan user={this.state.user}
             onCompleteAction={this.handleCompleteAction.bind(this)}
             handleDelete={this.handleDelete.bind(this)}

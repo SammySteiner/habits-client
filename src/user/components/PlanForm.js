@@ -46,6 +46,12 @@ export default class PlanForm extends Component {
     }
   }
 
+  handleDeleteGoal(type, id) {
+    let newGoals = this.state.goals
+    newGoals.splice(id, 1)
+    this.setState({goals: newGoals})
+  }
+
   handleAddGoal(e){
     var newState = Object.assign({}, this.state)
     newState.goals.push({interval: '', actions: []})
@@ -92,7 +98,7 @@ export default class PlanForm extends Component {
             <input name='repeat' type='checkbox' checked={this.state.repeat} onChange={e => this.handleChange( 'repeat', e )}/>
           </Form.Field>
           <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a new Goal</Button>
-          <GoalInput state={this.state} goals={this.state.goals} handleDelete={this.props.handleDelete} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
+          <GoalInput state={this.state} goals={this.state.goals} handleDelete={this.handleDeleteGoal.bind(this)} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
         </Form>
       </Modal.Content>
 
