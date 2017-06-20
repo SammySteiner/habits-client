@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import GoalInput from './GoalInput'
-import { Form, Button, Modal } from 'semantic-ui-react'
+import { Form, Button, Modal, Popup } from 'semantic-ui-react'
 
 export default class PlanForm extends Component {
   constructor(){
@@ -151,7 +151,7 @@ export default class PlanForm extends Component {
           </Modal.Actions>
           :
           <Modal.Actions>
-            <Button onClick={this.handleSubmit} disabled={!this.state.formValid} color='blue' type='button'>Create Plan</Button>
+            {!this.state.formValid ? <Popup position='left center' trigger={<Button onClick={() => alert('Your plan form is not valid')} color='blue' type='button'>Create Plan</Button>} content={'A Goal needs a title, description, at least one phase with a lenght in number of days, and at least one action per phase with a description.'} /> : <Button onClick={this.handleSubmit} color='blue' type='button'>Create Plan</Button>}
           </Modal.Actions>
         }
       </Modal>
