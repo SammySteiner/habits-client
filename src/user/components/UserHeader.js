@@ -16,8 +16,8 @@ export default (props) => {
             </Grid.Column>
             <Grid.Column>
                 <Card.Header as='h4'>Progress</Card.Header>
-              <h3>You've completed {completedPlans(props.user)} out of {props.plans.length} Plans</h3>
-              <h3>You have {props.plans.filter(plan => !plan.complete).length} active Plans</h3>
+              <h3>You've completed {completedPlans(props.user)} out of {props.plans.length} Goals</h3>
+              <h3>You have {props.plans.filter(plan => !plan.complete).length} active Goals</h3>
               <Progress progress indicating percent={completedActiveGoals(props.user)}>Percent of active Goals you've completed</Progress>
               <Progress progress indicating percent={completedActiveActions(props.user)}>Percent of active Actions you've taken toward your Goals. Keep it up!</Progress>
             </Grid.Column>
