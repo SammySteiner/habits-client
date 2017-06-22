@@ -6,7 +6,7 @@ export default class SignupForm extends Component {
     super()
     this.state = {
       username: '',
-      email: '',
+      // email: '',
       password: '',
       password_confirmation: ''
     }
@@ -18,7 +18,7 @@ export default class SignupForm extends Component {
       this.props.handleSignup(this.state)
       this.setState({
         username: '',
-        email: '',
+        // email: '',
         password: '',
         password_confirmation: ''
       })
@@ -50,10 +50,10 @@ export default class SignupForm extends Component {
           <input required={true} type='text' value={this.state.username} onChange={e => this.handleChange( 'username', e )}/>
           {this.checkUsernameTaken() ? <Message warning content="Username is taken" /> : ''}
         </Form.Field>
-        <Form.Field>
+        {/* <Form.Field>
           <label>Email:</label>
           <input type='text' value={this.state.email} onChange={e => this.handleChange( 'email', e )}/>
-        </Form.Field>
+        </Form.Field> */}
         <Form.Field>
           <label>Password:</label>
           <input required={true} type='password' value={this.state.password} onChange={e => this.handleChange( 'password', e )}/>

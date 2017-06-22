@@ -6,7 +6,7 @@ export default (props) => {
   const plans = props.user.plans.map((plan, index) => {
     if ( plan.goals.length > 0 && plan.complete !== true ){
       return (
-        <Card key={plan.id}>
+        <Card raised key={plan.id}>
           <Card.Content>
             <Card.Header>{plan.title}</Card.Header>
             <Card.Meta>{plan.description}</Card.Meta>
@@ -19,7 +19,7 @@ export default (props) => {
     }
   })
   return (
-    <Card.Group>
+    <Card.Group itemsPerRow={3}>
       {plans}
     </Card.Group>
   )

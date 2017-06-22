@@ -8,7 +8,7 @@ export default ( props ) => {
         Habits
       </Menu.Item>
       <Menu.Item onClick={props.handleOpenPlanForm}>
-        Create Plan
+        Create Goal
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item onClick={props.handleLogout}>

@@ -3,10 +3,12 @@ import { Route, Switch } from 'react-router-dom'
 import NavBar from './NavBar'
 import AuthContainer from './auth/containers/AuthContainer'
 import UserContainer from './user/containers/UserContainer'
+import WelcomeMessage from './user/components/WelcomeMessage'
 import { isAuthenticated } from './hocs/isAuthenticated'
 import { login, createUser } from './api'
 import { withRouter } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
+import './app.css'
 
 
 const AuthenticatedUserContainer = isAuthenticated(UserContainer)
@@ -25,9 +27,14 @@ class App extends Component {
 
   handleLogin( params ){
     login(params)
-    .then( res => {
-      sessionStorage.setItem('jwt', res.token)
-    })
+    .then(res => {if (res.token)
+      {
+        sessionStorage.setItem('jwt', res.token)
+      } else {
+      alert(res.error)
+    }})
+
+
     .then(() => this.props.history.push('/'))
   }
 
@@ -58,15 +65,17 @@ class App extends Component {
 
   render() {
     return (
-      <Container>
-        <NavBar handleLogout={this.handleLogout} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/>
-        <h1>Welcome to Habits</h1>
-        <p>Habits is a tool to help create accountability through data for your journey to a better you. Use the form to create new goals, break them up into phases, and describe each action you will take to turn this idea into reality. Good luck. I believe in you!</p>
-          <Switch>
-            <Route exact path='/' render={ () => <AuthenticatedUserContainer modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/> }/>
-            <Route exact path='/login' render={ () => <AuthContainer handleSignup={this.handleSignup} handleLogin={this.handleLogin}/>}/>
-          </Switch>
-      </Container>
+      <div className={'background'}>
+        <Container >
+          <NavBar className={'foreground'} handleLogout={this.handleLogout} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/>
+          <WelcomeMessage />
+          <br></br>
+            <Switch>
+              <Route exact path='/' render={ () => <AuthenticatedUserContainer className={'foreground'} modalOpen={this.state.modalOpen} closeModal={this.handleCloseModal.bind(this)} handleOpenPlanForm={this.handleOpenPlanForm.bind(this)}/> }/>
+              <Route exact path='/login' render={ () => <AuthContainer className={'foreground'} handleSignup={this.handleSignup} handleLogin={this.handleLogin}/>}/>
+            </Switch>
+        </Container>
+      </div>
     );
   }
 }

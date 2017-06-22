@@ -123,15 +123,15 @@ export default class PlanForm extends Component {
   render(){
     return(
       <Modal open={this.props.modalOpen} onClose={this.props.resetFormState}>
-      <Modal.Header>{ this.state.id !== undefined ? 'Edit Your Plan' : 'Create a Plan' }</Modal.Header>
+      <Modal.Header>{ this.state.id !== undefined ? 'Edit Your Goal' : 'Create a Goal' }</Modal.Header>
       <Modal.Content>
         <Form onSubmit={this.handleSubmit.bind(this)}>
             <Form.Field>
-            <label>Plan Title:</label>
+            <label>Title:</label>
             <input placeholder='An easy to remember name for this goal' type='text' value={this.state.title} onChange={e => this.handleChange( 'title', e )}/>
           </Form.Field>
           <Form.Field>
-            <Form.TextArea label='Goal:' placeholder="Describe the long term accomplishments you'd like to create for yourself" value={this.state.description} onChange={e => this.handleChange( 'description', e )} />
+            <Form.TextArea label='Goal:' placeholder="Describe the long term accomplishments you are working for." value={this.state.description} onChange={e => this.handleChange( 'description', e )} />
             {/* <label>Goal:</label>
             <input placeholder="Describe the long term accomplishments you'd like to create for yourself" type='textarea' value={this.state.description} onChange={e => this.handleChange( 'description', e )}/> */}
           </Form.Field>

@@ -58,7 +58,7 @@ export default class UserContainer extends Component{
   }
 
   handleDelete( type, id ){
-    if (type = 'plans') {
+    if (type === 'plans') {
       deleteItem(type, id)
       .then( data => this.setState({ user: data },
       this.resetFormState) )

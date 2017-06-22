@@ -1,6 +1,6 @@
 import React from 'react'
 import Action from './Action'
-import { Card, Progress, Icon, Header, Popup } from 'semantic-ui-react'
+import { Card, Progress, Icon, Header, Popup, Divider } from 'semantic-ui-react'
 
 export default (props) => {
   let completedActions = 0
@@ -23,21 +23,30 @@ export default (props) => {
   let start = new Date(currentGoal.start_date)
   if ( start > today ) {
      cardContent =
-     <Card.Content>
+     <Card.Description>
        Congratulations, you're up to date with this goal! You're goal will resume on {new Date(currentGoal.start_date).toDateString()}
+       <Divider/>
+       Goal Progress: 100%
        <Progress indicating percent={100}/>
-     </Card.Content>
+     </Card.Description>
   } else {
      cardContent =
-     <Card.Content>
-       Tasks:
-       <Action actions={currentGoal.actions} onCompleteAction={props.onCompleteAction}/>
-       Goal Progress: {parseInt(completedActions/totalActions * 100, 10)}%
-       <Progress indicating percent={completedActions/totalActions * 100} />
-     </Card.Content>
+
+       <Card.Content>
+         <Card.Header as='h5'>
+           Actions:
+         </Card.Header>
+         <Card.Description>
+           <Action actions={currentGoal.actions} onCompleteAction={props.onCompleteAction}/>
+           <Divider/>
+           Goal Progress: {parseInt(completedActions/totalActions * 100, 10)}%
+           <Progress indicating percent={completedActions/totalActions * 100} />
+         </Card.Description>
+       </Card.Content>
+
   }
   return(
-    <div>
+    <Card.Content>
         {cardContent}
       <Card.Content extra>
         Expires on {new Date(currentGoal.expiration).toDateString()}
@@ -46,6 +55,6 @@ export default (props) => {
       </Header>
     </Card.Content>
 
-    </div>
+  </Card.Content>
   )
 }
