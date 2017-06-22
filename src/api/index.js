@@ -1,6 +1,5 @@
-// let DB_URL = 'https://fast-fjord-30160.herokuapp.com/api/v1/'
-let DB_URL = process.env.URL || 'http://localhost:3000/api/v1/'
-// toDateString
+let DB_URL = 'https://fast-fjord-30160.herokuapp.com/api/v1/'
+// let DB_URL = process.env.URL || 'http://localhost:3000/api/v1/' this isn't working with heroku
 
 export function fetchUsers(username, password){
   return fetch(DB_URL + 'users/', {
