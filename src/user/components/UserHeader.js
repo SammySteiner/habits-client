@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Segment, Grid, Progress, Card } from 'semantic-ui-react'
 import { completedPlans, completedActiveGoals, completedActiveActions, chartData } from './successCalc'
-import Chart, {defaults} from "react-chartjs-2"
+import Chart from "react-chartjs-2"
 
 export default (props) => {
   return (
