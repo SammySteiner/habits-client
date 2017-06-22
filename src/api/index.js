@@ -14,6 +14,17 @@ export function fetchUsers(username, password){
     .then( res => res.json() )
 }
 
+export function fetchUserNames(){
+  return fetch(DB_URL + 'usernames/', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  })
+    .then( res => res.json() )
+}
+
 export function fetchUser(){
   return fetch(DB_URL + 'users/dashboard' , {
     headers: {
