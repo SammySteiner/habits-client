@@ -2,12 +2,8 @@ import React from 'react'
 import { Header, Segment, Grid, Progress, Card } from 'semantic-ui-react'
 import { completedPlans, completedActiveGoals, completedActiveActions, chartData } from './successCalc'
 import Chart, {defaults} from "react-chartjs-2"
-console.log(defaults)
-// defaults.scale = {scaleOverride: true, scaleSteps: 10, scaleStepWidth: 10, scaleStartValue: 0}
 
 export default (props) => {
-
-
   return (
       <Segment padded >
         <Header.Content>
