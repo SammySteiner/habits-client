@@ -139,7 +139,7 @@ export default class PlanForm extends Component {
             <label>Auto Repeat:</label>
             <input name='repeat' type='checkbox' checked={this.state.repeat} onChange={e => this.handleChange( 'repeat', e )}/>
           </Form.Field>
-          <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a new Goal</Button>
+          <Button type='button' onClick={this.handleAddGoal.bind(this)}>Add a Phase</Button>
           <GoalInput state={this.state} goals={this.state.goals} handleDelete={this.handleDeleteGoal.bind(this)} handleChange={this.handleChange.bind(this)} handleAddAction={this.handleAddAction.bind(this)}/>
         </Form>
       </Modal.Content>
